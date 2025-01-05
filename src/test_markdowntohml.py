@@ -89,3 +89,45 @@ this is paragraph text
             html,
             "<div><blockquote>This is a blockquote block</blockquote><p>this is paragraph text</p></div>",
         )
+
+class TestExtractTitle(unittest.TestCase):
+    def test_extract_h1(self):
+        md = '# here is the header'
+
+        title, content = extract_title(md)
+        self.assertEqual(title,'# here is the header')
+        self.assertEqual(content,'')
+
+    
+    def test_no_h1(self):
+        md = '''## here is no the header
+extra
+extra2'''
+        with self.assertRaises(Exception):
+            self.extract_title(md)
+
+    def test_lower_h1(self):
+        md = '''trext
+        text
+    # here is the header
+extra
+extra2'''
+        title, content = extract_title(md)
+        self.assertEqual(title,'here is the header')  
+        self.assertEqual(content,'''trext
+        text
+extra
+extra2''')    
+
+    def test_preserves_other_hashtag(self):
+        md = '''trext
+        text
+    # # here is the header
+extra
+extra2'''
+        title, content = extract_title(md)
+        self.assertEqual(title,'# here is the header')
+        self.assertEqual(content,'''trext
+        text
+extra
+extra2''')      

@@ -6,7 +6,8 @@ static_fpth = ''
 
 
 def copy_contents(source,dest,fpth_list=[]):
-    '''Copies contents from source to specified directory.
+    '''Copies contents from source to specified destination directory.
+    Clears destination directory if it exists.
     Source: a directory
     Dest: a directory'''
     cwd = os.getcwd()
@@ -19,12 +20,12 @@ def copy_contents(source,dest,fpth_list=[]):
     os.mkdir(dest_pth)
 
     source_fpth = os.path.join(cwd,source)
-    
+
     if os.path.exists(source_fpth):
         for file in os.listdir(source_fpth):
             source_fpth_fnm = os.path.join(source_fpth,file)
             if os.path.isfile(source_fpth_fnm): # if this file is a leaf
-                print(f'{source_fpth_fnm} is a leaf')
+                # print(f'{source_fpth_fnm} is a leaf')
                 shutil.copy2(source_fpth_fnm,dest)
                 fpth_list.append(source_fpth_fnm)
             else:

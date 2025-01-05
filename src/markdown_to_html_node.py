@@ -54,7 +54,7 @@ def block_to_html_node(block,block_type):
             block = strip_code(block)
             children_nodes = text_to_children(block)
             mid_node = ParentNode('code',children_nodes)
-            return ParentNode('pre',mid_node)
+            return ParentNode('pre',[mid_node])
         case 'paragraph':
             children_nodes = text_to_children(block)
             return ParentNode('p',children_nodes)
@@ -130,7 +130,22 @@ def text_to_children(block):
         children_nodes.append(node.text_node_to_html_node())
     return children_nodes
 
- 
+def extract_title(md):
+    '''Extracts title from markdown text
+    md: a markdown string'''
+    lines_list = md.split('\n')
+    lines_list_cp = lines_list.copy()
+    title = ''
+    for line in lines_list:
+        line_strip = line.strip()
+        if line_strip.startswith('# '):
+            # title = line_strip
+            title = line_strip[2:]
+            # lines_list_cp.remove(line)
+    if title == '':
+        raise Exception('No title line found')
+    return title, '\n'.join(lines_list_cp)
+
 # md2 = markdown_to_html_node(md_blockquote)
 # print(md2)
 # print(type(md2))

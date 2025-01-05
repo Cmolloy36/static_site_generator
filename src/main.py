@@ -4,6 +4,7 @@ from inline_markdown import *
 from block_markdown import *
 from markdown_to_html_node import *
 from copy_contents import *
+from generate_page import *
 
 def main():
     md = """#### This is a heading
@@ -34,6 +35,11 @@ code text```"""
     dest = 'public'
     source = 'static'
     copied_file_list = copy_contents(source,dest)
+
+    from_path = 'content/index.md'
+    template_path = 'template.html'
+    dest_path = 'public/index.html'
+    generate_page(from_path,template_path,dest_path)
 
 
     # # Test Ch2
